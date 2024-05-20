@@ -41,6 +41,13 @@ alignedlayerd version
 ```
 alignedlayerd init NodeName --chain-id alignedlayer
 ```
+
+# Download Genesis & Download addrbook
+```
+wget https://raw.githubusercontent.com/Apollo-Sync/Aligned-layer/main/genesis.json
+
+```
+
 # Seed & Peer 
 ```
 PEERS=a1a98d9caf27c3363fab07a8e57ee0927d8c7eec@128.140.3.188:26656,1beca410dba8907a61552554b242b4200788201c@91.107.239.79:26656,f9000461b5f535f0c13a543898cc7ac1cd10f945@88.99.174.203:26656,ca2f644f3f47521ff8245f7a5183e9bbb762c09d@116.203.81.174:26656
