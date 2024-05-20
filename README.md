@@ -168,6 +168,45 @@ alignedlayerd tx slashing unjail --from wallet --chain-id alignedlayer --fees=50
 ```
 cat $HOME/.alignedlayer/config/priv_validator_key.json
 ```
+# Services Management
+Reload Service
+```
+sudo systemctl daemon-reload
+```
 
+Enable Service
+```
+sudo systemctl enable alignedlayerd
+```
+
+Disable Service
+```
+sudo systemctl disable alignedlayerd
+```
+
+Start Service
+```
+sudo systemctl start alignedlayerd
+```
+
+Stop Service
+```
+sudo systemctl stop alignedlayerd
+```
+
+Restart Service
+```
+sudo systemctl restart alignedlayerd
+```
+
+Check Service Status
+```
+sudo systemctl status alignedlayerd
+```
+
+Check Service Logs
+```
+sudo journalctl -u alignedlayerd -f --no-hostname -o cat
+```
 
 
