@@ -81,6 +81,93 @@ sudo systemctl restart alignedlayerd
 sudo journalctl -u alignedlayerd -f -o cat
 ```
 
+# Wallet
+**Add New Wallet Key (remember Save seed)**
+```
+alignedlayerd keys add wallet
+```
+
+**Recover existing key**
+```
+alignedlayerd keys add wallet --recover
+```
+
+**List All Keys**
+```
+alignedlayerd keys list
+```
+
+**Query Wallet Balance**
+```
+alignedlayerd q bank balances $(alignedlayerd keys show wallet -a)
+```
+
+**Check sync status (False is synced)**
+```
+alignedlayerd status 2>&1 | jq .sync_info
+```
+
+# VALIDATOR
+**Obtain your validator public key by running the following command:**
+```
+alignedlayerd comet show-validator
+```
+
+**The output will be similar to this (with a different key):**
+{"@type":"/cosmos.crypto.ed25519.PubKey","key":"lR1d7YBVK5jYijOfWVKRFoWCsS4dg3kagT7LB9GnG8I="}
+
+**Then, create a file named validator.json with the following content:**
+```
+nano $HOME/validator.json
+```
+
+**Change your info, from "pubkey" to "details" and Save them**
+```
+{    
+    "pubkey": {"@type":"/cosmos.crypto.ed25519.PubKey","key":"lR1d7YBVK5jYijOfWVKRFoWCsS4dg3kagT7LB9GnG8I="},
+    "amount": "1000000stake",
+    "moniker": "your-node-moniker",
+    "identity": "eqlab testnet validator",
+    "website": "optional website for your validator",
+    "security": "optional security contact for your validator",
+    "details": "optional details for your validator",
+    "commission-rate": "0.1",
+    "commission-max-rate": "0.2",
+    "commission-max-change-rate": "0.01",
+    "min-self-delegation": "1"
+}
+```
+
+**Finally, we're ready to submit the transaction to create the validator:**
+```
+alignedlayerd tx staking create-validator $HOME/validator.json \
+--from wallet --chain-id alignedlayer \
+--fees 50stake
+```
+
+**Delegate Token to your own validator**
+```
+alignedlayerd tx staking delegate $(alignedlayerd keys show wallet --bech val -a)  1000000stake \
+--from wallet --chain-id alignedlayer \
+--fees 50stake
+```
+
+**Withdraw rewards and commission from your validator**
+```
+alignedlayerd tx distribution withdraw-rewards $(alignedlayerd keys show wallet --bech val -a) \
+--from wallet --chain-id alignedlayer \
+--fees 50stake
+```
+
+**Unjail validator**
+```
+alignedlayerd tx slashing unjail --from wallet --chain-id alignedlayer --fees=50stake -y
+```
+
+**Backup Validator**
+```
+cat $HOME/.alignedlayer/config/priv_validator_key.json
+```
 
 
 
